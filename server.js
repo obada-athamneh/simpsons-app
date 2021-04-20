@@ -12,9 +12,25 @@ require('dotenv').config();
 // Application Setup
 const app = express();
 const PORT = process.env.PORT || 3000;
+app.use(express.static('./public'));
+app.use(express.urlencoded({extended :true}));
+app.use(methodOverride('_method'));
+app.set('view engine', 'ejs')
 
 // Express middleware
 // Utilize ExpressJS functionality to parse the body of the request
+app.get('/', indexHandler)
+app.get('/favorite-quotes', )
+function indexHandler (req, res){
+    let url = 'https://thesimpsonsquoteapi.glitch.me/quotes'
+    superagent.get(url).set('User-Agent', '1.0').then(x => {
+
+        console.log(x.body)
+        res.render('index', { idx: x.body})
+    })
+    
+}
+
 
 // Specify a directory for static resources
 
@@ -27,6 +43,7 @@ const PORT = process.env.PORT || 3000;
 
 // Database Setup
 const client = new pg.Client(process.env.DATABASE_URL);
+
 
 // app routes here
 // -- WRITE YOUR ROUTES HERE --
